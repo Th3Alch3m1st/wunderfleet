@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Wunder Fleet</string>
+
+    <!-- Google Map API key -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyABk4x_7W5gvra1bC9VPEUhpZgrnfyQR-o</string>
+    <string name="no_car_found">No Car Found</string>
+    <string name="retry">Retry</string>
+
+</resources>
