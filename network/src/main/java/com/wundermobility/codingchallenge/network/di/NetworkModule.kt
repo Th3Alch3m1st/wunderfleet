@@ -3,8 +3,10 @@ package com.wundermobility.codingchallenge.network.di
 import android.content.Context
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
-import com.wundermobility.codingchallenge.network.BuildConfig
 import com.squareup.moshi.Moshi
+import com.wundermobility.codingchallenge.network.BuildConfig
+import com.wundermobility.codingchallenge.network.datasource.carinfo.CarInfoService
+import com.wundermobility.codingchallenge.network.datasource.carrent.CarRentService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,6 +60,18 @@ object NetworkModule {
             .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCarInfoService(retrofit: Retrofit): CarInfoService {
+        return retrofit.create(CarInfoService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCarRentService(retrofit: Retrofit): CarRentService {
+        return retrofit.create(CarRentService::class.java)
     }
 
     @Suppress("SameParameterValue")
