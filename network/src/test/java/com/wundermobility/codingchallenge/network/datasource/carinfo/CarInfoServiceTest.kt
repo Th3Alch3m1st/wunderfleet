@@ -26,11 +26,16 @@ class CarInfoServiceTest {
     companion object {
         const val CAR_LIST_SIZE = 10
 
-        const val INDEX_0_CAR_NAME = "Manfred"
+        const val INDEX_0_CAR_TITLE = "Manfred"
         const val INDEX_0_LICENCE_PLATE_NUMBER = "FBL 081"
 
-        const val INDEX_9_CAR_NAME = "Fanny"
+        const val INDEX_9_CAR_TITLE = "Fanny"
         const val INDEX_9_LICENCE_PLATE_NUMBER = "120-OSM"
+
+        const val CAR_ID = 2
+        const val CAR_DETAIL_INFO_TITLE = "Anton"
+        const val CAR_DETAIL_INFO_HARDWARE_ID = "NBSG4C7B406U63RE"
+        const val CAR_DETAIL_LICENCE_PLATE_NUMBER = "162 NBT"
     }
 
     @get:Rule
@@ -59,11 +64,15 @@ class CarInfoServiceTest {
 
     @Test
     fun `get car info and correct car info size returned`() {
+        // Arrange
         mockWebServer.enqueue(mockResponse("carList.json"))
+
+        // Act
         sutService.getCarList().test()
             .assertNoErrors()
             .assertComplete()
             .assertValue { response ->
+                // Assert
                 response.body()?.size shouldEqual CAR_LIST_SIZE
                 return@assertValue true
             }
@@ -71,16 +80,38 @@ class CarInfoServiceTest {
 
     @Test
     fun `get car info and correct car info returned`() {
+        // Arrange
         mockWebServer.enqueue(mockResponse("carList.json"))
+
+        // Act
         sutService.getCarList().test()
             .assertNoErrors()
             .assertComplete()
             .assertValue { response ->
-                response.body()?.get(0)?.title shouldEqual INDEX_0_CAR_NAME
+                // Assert
+                response.body()?.get(0)?.title shouldEqual INDEX_0_CAR_TITLE
                 response.body()?.get(0)?.licencePlate shouldEqual INDEX_0_LICENCE_PLATE_NUMBER
 
-                response.body()?.get(9)?.title shouldEqual INDEX_9_CAR_NAME
+                response.body()?.get(9)?.title shouldEqual INDEX_9_CAR_TITLE
                 response.body()?.get(9)?.licencePlate shouldEqual INDEX_9_LICENCE_PLATE_NUMBER
+                return@assertValue true
+            }
+    }
+
+    @Test
+    fun `get car details info and correct car detail info returned`() {
+        // Arrange
+        mockWebServer.enqueue(mockResponse("carDetailInfo.json"))
+
+        // Act
+        sutService.getCarDetailsInfo(CAR_ID).test()
+            .assertNoErrors()
+            .assertComplete()
+            .assertValue { response ->
+                // Assert
+                response.body()?.title shouldEqual CAR_DETAIL_INFO_TITLE
+                response.body()?.licencePlate shouldEqual CAR_DETAIL_LICENCE_PLATE_NUMBER
+                response.body()?.hardwareId shouldEqual CAR_DETAIL_INFO_HARDWARE_ID
                 return@assertValue true
             }
     }

@@ -25,7 +25,7 @@ data class CarRentResponse(
 
 	val userId: Int? = null,
 
-	val carId: Int? = null,
+	val carId: Int,
 
 	val damageDescription: String? = null
 )
