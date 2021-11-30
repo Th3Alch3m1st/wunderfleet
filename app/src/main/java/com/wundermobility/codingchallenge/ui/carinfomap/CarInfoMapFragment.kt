@@ -1,6 +1,7 @@
 package com.wundermobility.codingchallenge.ui.carinfomap
 
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -46,6 +47,7 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.map_fragment) as? SupportMapFragment
         mapFragment?.getMapAsync(this)
+        addOnBackPressListener()
     }
 
     override fun onDestroyView() {
@@ -141,14 +143,18 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
         dataBinding.toolbar.setNavigationIcon(R.drawable.ic_back)
         dataBinding.toolbar.setNavigationOnClickListener {
             //on press back button showing all marker again for selection
-            setVisibilityStatusForMarker(
-                selectedCarInfo!!,
-                visibilityStatus = true,
-                hideInfoWindow = true
-            )
-            dataBinding.toolbar.navigationIcon = null
-            selectedCarInfo = null
+            showMarkerAndHideToolbarBackIcon()
         }
+    }
+
+    private fun showMarkerAndHideToolbarBackIcon() {
+        setVisibilityStatusForMarker(
+            selectedCarInfo!!,
+            visibilityStatus = true,
+            hideInfoWindow = true
+        )
+        dataBinding.toolbar.navigationIcon = null
+        selectedCarInfo = null
     }
 
     /**
@@ -175,5 +181,20 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
         val direction =
             CarInfoMapFragmentDirections.actionFragmentCarListToCarDetailFragment(carInfo)
         findNavController().safeNavigate(direction)
+    }
+
+    private fun addOnBackPressListener() {
+        view?.isFocusableInTouchMode = true
+        view?.requestFocus()
+        view?.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if (selectedCarInfo != null) {
+                    showMarkerAndHideToolbarBackIcon()
+                    true
+                } else {
+                    false
+                }
+            } else false
+        }
     }
 }
