@@ -6,7 +6,7 @@ import com.wundermobility.codingchallenge.network.model.CarInfoUIModel
 /**
  * Created By Rafiqul Hasan
  */
-class CarInfoToCarInfoUIModelMapper() : Mapper<CarInfo, CarInfoUIModel> {
+class CarInfoToCarInfoUIModelMapper : Mapper<CarInfo, CarInfoUIModel> {
     override fun map(input: CarInfo): CarInfoUIModel {
         return CarInfoUIModel(
             input.carId,

@@ -7,6 +7,10 @@ import com.squareup.moshi.Moshi
 import com.wundermobility.codingchallenge.network.BuildConfig
 import com.wundermobility.codingchallenge.network.datasource.carinfo.CarInfoService
 import com.wundermobility.codingchallenge.network.datasource.carrent.CarRentService
+import com.wundermobility.codingchallenge.network.mapper.CarInfoToCarInfoUIModelMapper
+import com.wundermobility.codingchallenge.network.mapper.Mapper
+import com.wundermobility.codingchallenge.network.model.CarInfo
+import com.wundermobility.codingchallenge.network.model.CarInfoUIModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -72,6 +76,12 @@ object NetworkModule {
     @Singleton
     fun provideCarRentService(retrofit: Retrofit): CarRentService {
         return retrofit.create(CarRentService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMapper(): Mapper<CarInfo, CarInfoUIModel> {
+        return CarInfoToCarInfoUIModelMapper()
     }
 
     @Suppress("SameParameterValue")
