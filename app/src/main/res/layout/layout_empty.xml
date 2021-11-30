@@ -27,10 +27,13 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_error"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_12ssp"
             android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:text="@string/no_car_found"
+            android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="@dimen/_16ssp"
             android:textStyle="bold"

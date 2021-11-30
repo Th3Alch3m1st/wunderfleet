@@ -62,6 +62,14 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
     override fun onMapReady(map: GoogleMap) {
         mMap = map
         mMap.setOnMarkerClickListener(this)
+
+        //info window click listener
+        mMap.setOnInfoWindowClickListener { marker ->
+            val currentClickedCarInfo = marker.tag as CarInfoUIModel
+            if (selectedCarInfo?.carID == currentClickedCarInfo.carID) {
+                navigateToCarDetails(currentClickedCarInfo)
+            }
+        }
         initCarListObserver()
     }
 

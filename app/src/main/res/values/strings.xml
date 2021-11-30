@@ -7,4 +7,25 @@
     <string name="retry">Retry</string>
     <string name="car_list">Car List</string>
     <string name="car_details">Car Details</string>
+    <string name="rent_this_car">Rent this car</string>
+    <string name="car_id_x">Car Id : %d</string>
+    <string name="title_x">Title : %s</string>
+    <string name="licence_plate_x">Licence Plate : %s</string>
+    <string name="hardware_id_x">Hardware ID : %s</string>
+    <string name="is_clean_x">Is Clean : %s</string>
+    <string name="is_damaged_x">Is Damaged : %s</string>
+    <string name="fuel_level_x">Fuel Level : %d</string>
+    <string name="vehicle_state_id_x">Vehicle State Id : %d</string>
+    <string name="vehicle_type_id_x">Vehicle Type Id : %d</string>
+    <string name="pricing_time_x">Pricing Time : %s</string>
+    <string name="pricing_parking_x">Pricing Parking : %s</string>
+    <string name="is_activated_by_hardware_x">Is Activated By Hardware : %s</string>
+    <string name="location_id_x">locationId : %d</string>
+    <string name="address_x">Address : %s</string>
+    <string name="zipCode_x">ZipCode : %s</string>
+    <string name="city_x">City : %s</string>
+    <string name="lat_x">Latitude : %f</string>
+    <string name="lon_x">Longitude : %f</string>
+    <string name="reservation_state_x">Reservation State : %d</string>
+    <string name="damage_description_x">Damage Description : %s</string>
 </resources>

@@ -18,17 +18,22 @@ object ErrorHandler {
         message: String? = null
     ): RequestException {
         errorBody?.let { body ->
-            val moshi = Moshi.Builder()
-                .build()
-            val jsonAdapter: JsonAdapter<Error> = moshi.adapter(Error::class.java)
-            val apiError = jsonAdapter.fromJson(body.string())
+            try {
+                val moshi = Moshi.Builder()
+                    .build()
+                val jsonAdapter: JsonAdapter<Error> = moshi.adapter(Error::class.java)
+                val apiError = jsonAdapter.fromJson(body.string())
 
-            // if error response does not contain any specific message use a generic error message from resource
-            return RequestException().apply {
-                this.message =
-                    apiError?.message ?: UNKNOWN_NETWORK_EXCEPTION
-                this.statusCode = statusCode
+                // if error response does not contain any specific message use a generic error message from resource
+                return RequestException().apply {
+                    this.message =
+                        apiError?.message ?: UNKNOWN_NETWORK_EXCEPTION
+                    this.statusCode = statusCode
+                }
+            } catch (ex: Exception) {
+                return RequestException(message = UNEXPECTED_ERROR)
             }
+
         }
 
         message?.let { msg ->

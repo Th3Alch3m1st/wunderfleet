@@ -18,6 +18,7 @@ const val CONNECT_EXCEPTION =
     "Could not connect to the server. Please check your internet connection and try again."
 const val UNKNOWN_HOST_EXCEPTION =
     "Couldn't connect to the server at the moment. Please try again in a few minutes."
+const val UNEXPECTED_ERROR = "An unexpected error has occurred. Please try again"
 
 fun <T : Any> Single<Response<T>>.onResponse(): Single<T> {
     return map { response ->

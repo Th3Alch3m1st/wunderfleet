@@ -56,10 +56,10 @@ abstract class BaseFragment<ViewModel : BaseViewModel, DataBinding : ViewDataBin
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initObserver()
+        initLoaderObserver()
     }
 
-    private fun initObserver() {
+    private fun initLoaderObserver() {
         viewModel.showLoader.observe(viewLifecycleOwner) {
             if (it)
                 fragmentCallBack?.showLoader()
