@@ -3,10 +3,8 @@ package com.wundermobility.codingchallenge.ui.carinfomap
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
+import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.Marker
@@ -16,6 +14,7 @@ import com.wundermobility.codingchallenge.core.fragment.BaseFragment
 import com.wundermobility.codingchallenge.databinding.FragmentCarInfoMapBinding
 import com.wundermobility.codingchallenge.network.model.CarInfoUIModel
 import com.wundermobility.codingchallenge.ui.MainViewModel
+import com.wundermobility.codingchallenge.utils.safeNavigate
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -24,9 +23,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding>(),
     OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
+
     private val viewModel: MainViewModel by activityViewModels()
     private lateinit var mMap: GoogleMap
+
+    private var selectedCarInfo: CarInfoUIModel? = null
+
     private val markerList: MutableList<Marker> = mutableListOf()
+
     override val layoutResourceId: Int
         get() = R.layout.fragment_car_info_map
 
@@ -44,6 +48,15 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
         mapFragment?.getMapAsync(this)
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // removing all marker
+        for (marker in markerList) {
+            marker.remove()
+        }
+        markerList.clear()
+    }
+
     override fun onMapReady(map: GoogleMap) {
         mMap = map
         mMap.setOnMarkerClickListener(this)
@@ -51,16 +64,20 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {
-        showHideMarker(marker.tag as CarInfoUIModel, false)
-
-        dataBinding.toolbar.setNavigationIcon(R.drawable.ic_back)
-        dataBinding.toolbar.setNavigationOnClickListener {
-            showHideMarker(marker.tag as CarInfoUIModel,true)
-            dataBinding.toolbar.navigationIcon = null
+        selectedCarInfo?.let { carInfo ->
+            val currentClickedCarInfo = marker.tag as CarInfoUIModel
+            if (carInfo.carID == currentClickedCarInfo.carID) {
+                navigateToCarDetails(currentClickedCarInfo)
+            }
+        } ?: run {
+            selectedCarInfo = marker.tag as CarInfoUIModel
+            //when user select a item hide all other marker
+            setVisibilityStatusForMarker(marker.tag as CarInfoUIModel, false)
+            showToolbarBackIcon()
         }
+
         return false
     }
-
 
     private fun initCarListObserver() {
         viewModel.carList.observe(viewLifecycleOwner) { carList ->
@@ -86,21 +103,77 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
             marker?.let {
                 markerList.add(marker)
             }
+
+            //setting state when fragment back from fragment details
+            selectedCarInfo?.let { sCarInfo ->
+                if (sCarInfo.carID == car.carID) {
+                    marker?.showInfoWindow()
+                }
+            }
             builder.include(point)
         }
-
         val bounds = builder.build()
         val boundPadding = resources.getDimension(R.dimen._40sdp).toInt()
-        val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, boundPadding)
-        mMap.animateCamera(cameraUpdate)
+
+        var cameraUpdate: CameraUpdate? = null
+
+        selectedCarInfo?.let { sCarInfo ->
+            //setting state when fragment back from fragment details and moving camera to previous selected item
+            showToolbarBackIcon()
+            setVisibilityStatusForMarker(sCarInfo, false)
+            cameraUpdate = CameraUpdateFactory.newLatLng(
+                LatLng(
+                    sCarInfo.latitude,
+                    sCarInfo.longitude
+                )
+            )
+        } ?: run {
+            cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, boundPadding)
+        }
+
+        mMap.animateCamera(cameraUpdate!!)
     }
 
-    private fun showHideMarker(selectedCar: CarInfoUIModel, visibilityStatus: Boolean) {
+    /**
+     * setting-up toolbar back button, when user selected a marker and on press back button user able to see all marker again
+     */
+    private fun showToolbarBackIcon() {
+        dataBinding.toolbar.setNavigationIcon(R.drawable.ic_back)
+        dataBinding.toolbar.setNavigationOnClickListener {
+            //on press back button showing all marker again for selection
+            setVisibilityStatusForMarker(
+                selectedCarInfo!!,
+                visibilityStatus = true,
+                hideInfoWindow = true
+            )
+            dataBinding.toolbar.navigationIcon = null
+            selectedCarInfo = null
+        }
+    }
+
+    /**
+     * show and hide marker
+     */
+    private fun setVisibilityStatusForMarker(
+        selectedCar: CarInfoUIModel,
+        visibilityStatus: Boolean,
+        hideInfoWindow: Boolean = false
+    ) {
         for (marker in markerList) {
             val carInfo = marker.tag as CarInfoUIModel
             if (carInfo.carID != selectedCar.carID) {
                 marker.isVisible = visibilityStatus
+            } else {
+                if (hideInfoWindow) {
+                    marker.hideInfoWindow()
+                }
             }
         }
+    }
+
+    private fun navigateToCarDetails(carInfo: CarInfoUIModel) {
+        val direction =
+            CarInfoMapFragmentDirections.actionFragmentCarListToCarDetailFragment(carInfo)
+        findNavController().safeNavigate(direction)
     }
 }

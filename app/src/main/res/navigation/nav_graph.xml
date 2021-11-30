@@ -3,10 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment_manufacturer">
+    app:startDestination="@id/fragment_car_list">
     <fragment
-        android:id="@+id/fragment_manufacturer"
+        android:id="@+id/fragment_car_list"
         android:name="com.wundermobility.codingchallenge.ui.carinfomap.CarInfoMapFragment"
         android:label="@string/car_list"
-        tools:layout="@layout/fragment_car_info_map"/>
+        tools:layout="@layout/fragment_car_info_map">
+        <action
+            android:id="@+id/action_fragment_car_list_to_car_detail_fragment"
+            app:destination="@id/fragment_car_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_car_details"
+        android:name="com.wundermobility.codingchallenge.ui.cardetails.CarDetailsFragment"
+        android:label="@string/car_list"
+        tools:layout="@layout/fragment_car_details">
+
+        <argument
+            android:name="carInfo"
+            app:argType="com.wundermobility.codingchallenge.network.model.CarInfoUIModel" />
+    </fragment>
 </navigation>

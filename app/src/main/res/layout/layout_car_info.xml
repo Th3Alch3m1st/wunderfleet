@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.appcompat.widget.AppCompatTextView xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/tv_car_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/_3sdp"
+        android:paddingBottom="@dimen/_3sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_11ssp"
+        tools:text="Details of package" />
+</layout>

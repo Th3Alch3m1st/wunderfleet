@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
     id("dagger.hilt.android.plugin")
     id("com.github.ben-manes.versions") version "0.39.0"
 }
@@ -52,7 +54,12 @@ dependencies {
 
     implementation(AndroidXSupportDependencies.appCompat)
     implementation(AndroidXSupportDependencies.constraintLayout)
+    implementation(AndroidXSupportDependencies.fragmentKtx)
     implementation(AndroidXSupportDependencies.lifecycleRuntimeKTX)
+
+    //navigation
+    implementation(AndroidXSupportDependencies.navigationFragmentKtx)
+    implementation(AndroidXSupportDependencies.navigationUIKtx)
 
     //material
     implementation(MaterialDesignDependencies.materialDesign)

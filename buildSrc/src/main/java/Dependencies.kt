@@ -68,7 +68,10 @@ object KotlinDependencies {
 
 object AndroidXSupportDependencies {
     val appCompat by lazy { "androidx.appcompat:appcompat:${Versions.appCompat}" }
+    val fragmentKtx by lazy { "androidx.fragment:fragment-ktx:${Versions.fragmentKtx}" }
     val constraintLayout by lazy { "androidx.constraintlayout:constraintlayout:${Versions.constraintLayout}" }
+    val navigationFragmentKtx by lazy { "androidx.navigation:navigation-fragment-ktx:${Versions.navigation}" }
+    val navigationUIKtx by lazy { "androidx.navigation:navigation-ui-ktx:${Versions.navigation}" }
     val lifecycleRuntimeKTX by lazy { "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycleRuntimeKTX}" }
 }
 

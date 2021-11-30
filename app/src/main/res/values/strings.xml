@@ -6,4 +6,5 @@
     <string name="no_car_found">No Car Found</string>
     <string name="retry">Retry</string>
     <string name="car_list">Car List</string>
+    <string name="car_details">Car Details</string>
 </resources>
