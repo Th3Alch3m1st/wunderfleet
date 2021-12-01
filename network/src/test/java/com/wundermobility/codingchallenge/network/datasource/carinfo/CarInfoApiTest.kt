@@ -72,7 +72,7 @@ class CarInfoApiTest {
                 // Assert
                 list.size shouldEqual CAR_LIST_SIZE
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     @Test
@@ -92,7 +92,7 @@ class CarInfoApiTest {
                 list[9].title shouldEqual INDEX_9_CAR_TITLE
                 list[9].licencePlate shouldEqual INDEX_9_LICENCE_PLATE_NUMBER
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     @Test
@@ -110,7 +110,7 @@ class CarInfoApiTest {
                 response.licencePlate shouldEqual CAR_DETAIL_LICENCE_PLATE_NUMBER
                 response.hardwareId shouldEqual CAR_DETAIL_INFO_HARDWARE_ID
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     private fun getOkHttpClient(): OkHttpClient {

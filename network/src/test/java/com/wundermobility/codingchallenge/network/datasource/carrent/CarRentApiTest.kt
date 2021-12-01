@@ -68,7 +68,7 @@ class CarRentApiTest{
                 response.carId shouldEqual CarRentServiceTest.CAR_ID
                 response.licencePlate shouldEqual CarRentServiceTest.LICENCE_PLATE
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     private fun getOkHttpClient(): OkHttpClient {

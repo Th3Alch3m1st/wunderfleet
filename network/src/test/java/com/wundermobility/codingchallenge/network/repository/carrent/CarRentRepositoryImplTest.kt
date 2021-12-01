@@ -35,11 +35,29 @@ class CarRentRepositoryImplTest {
     }
 
     @Test
-    fun `request for rent car and car rent success`() {
+    fun `request for rent car and param pass correctly`(){
         // Arrange
         successCarRent()
         val acRequestBody = argumentCaptor<CarRentRequestBody>()
         val acString = argumentCaptor<String>()
+
+        // Act
+        sutRepository.rentCar(CarRentRequestBody(CarRentServiceTest.CAR_ID)).test()
+            .assertNoErrors()
+            .assertComplete()
+            .dispose()
+
+        // Verify
+        verify(mockApi).rentCar(acString.capture(), acString.capture(), acRequestBody.capture())
+        acString.allValues[0] shouldEqual CarRentService.CAR_RENT_URL
+        acString.allValues[1] shouldEqual "Bearer df7c313b47b7ef87c64c0f5f5cebd6086bbb0fa"
+        acRequestBody.firstValue.carId shouldEqual CarRentServiceTest.CAR_ID
+    }
+
+    @Test
+    fun `request for rent car and car rent success`() {
+        // Arrange
+        successCarRent()
 
         // Act
         sutRepository.rentCar(CarRentRequestBody(CarRentServiceTest.CAR_ID)).test()
@@ -50,13 +68,7 @@ class CarRentRepositoryImplTest {
                 response.carId shouldEqual CarRentServiceTest.CAR_ID
                 response.licencePlate shouldEqual CarRentServiceTest.LICENCE_PLATE
                 return@assertValue true
-            }
-
-        // Verify
-        verify(mockApi).rentCar(acString.capture(), acString.capture(), acRequestBody.capture())
-        acString.allValues[0] shouldEqual CarRentService.CAR_RENT_URL
-        acString.allValues[1] shouldEqual "Bearer df7c313b47b7ef87c64c0f5f5cebd6086bbb0fa"
-        acRequestBody.firstValue.carId shouldEqual CarRentServiceTest.CAR_ID
+            }.dispose()
     }
 
     @Test
@@ -70,7 +82,7 @@ class CarRentRepositoryImplTest {
                 val error = exception as RequestException
                 error.message shouldEqual CarInfoRepositoryImplTest.ERROR_MSG
                 return@assertError true
-            }
+            }.dispose()
     }
 
     private fun failureCarList() {

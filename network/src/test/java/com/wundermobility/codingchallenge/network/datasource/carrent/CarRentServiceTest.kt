@@ -60,7 +60,7 @@ class CarRentServiceTest {
                 response.body()?.carId shouldEqual CAR_ID
                 response.body()?.licencePlate shouldEqual LICENCE_PLATE
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     @After

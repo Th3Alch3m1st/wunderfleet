@@ -1,0 +1,23 @@
+{
+  "carId": 2,
+  "title": "Anton",
+  "isClean": true,
+  "isDamaged": false,
+  "licencePlate": "162 NBT",
+  "fuelLevel": 46,
+  "vehicleStateId": 0,
+  "hardwareId": "NBSG4C7B406U63RE",
+  "vehicleTypeId": 2,
+  "pricingTime": "",
+  "pricingParking": "",
+  "isActivatedByHardware": false,
+  "locationId": 2,
+  "address": "Kuhstraße 13",
+  "zipCode": "44137",
+  "city": "Dortmund",
+  "lat": 51.511998333333,
+  "lon": 7.4625316666667,
+  "reservationState": 0,
+  "damageDescription": "- Helmbox fachgerecht angebracht",
+  "vehicleTypeImageUrl": "https://wunderfleet-recruiting-dev.s3.eu-central-1.amazonaws.com/images/vehicle_type_image.png"
+}

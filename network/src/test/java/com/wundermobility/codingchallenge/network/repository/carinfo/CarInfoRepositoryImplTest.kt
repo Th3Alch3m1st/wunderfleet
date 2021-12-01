@@ -57,7 +57,7 @@ class CarInfoRepositoryImplTest {
                 // Assert
                 list.size shouldEqual CAR_LIST_SIZE
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     @Test
@@ -79,7 +79,7 @@ class CarInfoRepositoryImplTest {
                 list[9].latitude shouldEqual INDEX_9_CAR_LAT
                 list[9].longitude shouldEqual INDEX_9_CAR_LON
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     @Test
@@ -98,7 +98,7 @@ class CarInfoRepositoryImplTest {
                 carInfo.licencePlate shouldEqual CarInfoServiceTest.CAR_DETAIL_LICENCE_PLATE_NUMBER
                 carInfo.hardwareId shouldEqual CarInfoServiceTest.CAR_DETAIL_INFO_HARDWARE_ID
                 return@assertValue true
-            }
+            }.dispose()
 
         // Verify
         verify(mockApi).getCarDetailsInfo(acInt.capture())
@@ -118,7 +118,7 @@ class CarInfoRepositoryImplTest {
                 val error = exception as RequestException
                 error.message shouldEqual ERROR_MSG
                 return@assertError true
-            }
+            }.dispose()
     }
 
     @Test
@@ -135,7 +135,7 @@ class CarInfoRepositoryImplTest {
                 val error = exception as RequestException
                 error.message shouldEqual ERROR_MSG
                 return@assertError true
-            }
+            }.dispose()
 
         // Verify
         verify(mockApi).getCarDetailsInfo(acInt.capture())

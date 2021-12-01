@@ -75,7 +75,7 @@ class CarInfoServiceTest {
                 // Assert
                 response.body()?.size shouldEqual CAR_LIST_SIZE
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     @Test
@@ -95,7 +95,7 @@ class CarInfoServiceTest {
                 response.body()?.get(9)?.title shouldEqual INDEX_9_CAR_TITLE
                 response.body()?.get(9)?.licencePlate shouldEqual INDEX_9_LICENCE_PLATE_NUMBER
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     @Test
@@ -113,7 +113,7 @@ class CarInfoServiceTest {
                 response.body()?.licencePlate shouldEqual CAR_DETAIL_LICENCE_PLATE_NUMBER
                 response.body()?.hardwareId shouldEqual CAR_DETAIL_INFO_HARDWARE_ID
                 return@assertValue true
-            }
+            }.dispose()
     }
 
     private fun getOkHttpClient(): OkHttpClient {
