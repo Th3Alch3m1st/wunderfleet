@@ -28,4 +28,6 @@
     <string name="lon_x">Longitude : %f</string>
     <string name="reservation_state_x">Reservation State : %d</string>
     <string name="damage_description_x">Damage Description : %s</string>
+    <string name="rent_is_successful">Rent is Successful</string>
+    <string name="car_is_coming_your_way">Car is coming your way</string>
 </resources>

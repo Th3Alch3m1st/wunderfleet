@@ -4,9 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.15462962962962962" />
+        <entry key="app/src/main/res/drawable/bg_bar.xml" value="0.15" />
+        <entry key="app/src/main/res/drawable/bg_circuler.xml" value="0.15" />
+        <entry key="app/src/main/res/drawable/bg_top_corner_round_teal_700.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.3260416666666667" />
         <entry key="app/src/main/res/drawable/ic_car_place_holder.xml" value="0.3260416666666667" />
+        <entry key="app/src/main/res/drawable/ic_cross.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/bottom_sheet_dialog_selected_car_info.xml" value="0.28425925925925927" />
         <entry key="app/src/main/res/layout/dialog_loader.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_car_details.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_car_info_map.xml" value="0.1" />

@@ -19,11 +19,11 @@ android {
 
     buildTypes {
         getByName("debug"){
-            buildConfigField("String", "AUTH_TOKEN", "\"df7c313b47b7ef87c64c0f5f5cebd6086bbb0fa\"")
+            buildConfigField("String", "AUTH_TOKEN", "\"Bearer df7c313b47b7ef87c64c0f5f5cebd6086bbb0fa\"")
             buildConfigField("String", "BASE_URL", "\"https://s3.eu-central-1.amazonaws.com\"")
         }
         getByName("release") {
-            buildConfigField("String", "AUTH_TOKEN", "\"df7c313b47b7ef87c64c0f5f5cebd6086bbb0fa\"")
+            buildConfigField("String", "AUTH_TOKEN", "\"Bearer df7c313b47b7ef87c64c0f5f5cebd6086bbb0fa\"")
             buildConfigField("String", "BASE_URL", "\"https://s3.eu-central-1.amazonaws.com\"")
             isMinifyEnabled = false
             proguardFiles(
@@ -75,4 +75,9 @@ dependencies {
 
     testImplementation (TestingDependencies.mockitoKotlin)
     testImplementation (TestingDependencies.mockitoInline)
+
+    //Stetho https://github.com/facebook/stetho
+    implementation (Libraries.stetho)
+    implementation (Libraries.stethoOkhttp)
+    implementation (Libraries.stethoJSRhino)
 }

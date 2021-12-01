@@ -1,6 +1,6 @@
 package com.wundermobility.codingchallenge.network.di
 
-import android.content.Context
+import com.facebook.stetho.okhttp3.StethoInterceptor
 import com.ihsanbal.logging.Level
 import com.ihsanbal.logging.LoggingInterceptor
 import com.squareup.moshi.Moshi
@@ -14,9 +14,7 @@ import com.wundermobility.codingchallenge.network.model.CarInfoUIModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.internal.platform.Platform
@@ -33,7 +31,6 @@ import javax.inject.Singleton
 @Module
 object NetworkModule {
     private const val REQUEST_TIMEOUT = 30L
-    private const val CACHE_SIZE: Long = 10 * 1024 * 1024L // 10 MB
 
     /**
      * The method returns the Moshi object
@@ -47,12 +44,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkhttpClient(@ApplicationContext context: Context): OkHttpClient {
+    fun provideOkhttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .readTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .writeTimeout(REQUEST_TIMEOUT, TimeUnit.SECONDS)
             .addInterceptor(getLogInterceptors(BuildConfig.DEBUG))
-            .cache(getCache(context)).build()
+            .addNetworkInterceptor(StethoInterceptor())
+            .build()
     }
 
     @Provides
@@ -95,6 +93,4 @@ object NetworkModule {
         builder.isDebugAble = isDebugAble
         return builder.build()
     }
-
-    private fun getCache(context: Context) = Cache(context.cacheDir, CACHE_SIZE)
 }

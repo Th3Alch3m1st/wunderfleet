@@ -10,13 +10,19 @@ import io.reactivex.rxjava3.disposables.CompositeDisposable
 abstract class BaseViewModel : ViewModel() {
 
     protected var compositeDisposable = CompositeDisposable()
-    val showLoader by lazy { SingleLiveEvent<Boolean>() }
-    val toastMessage by lazy { SingleLiveEvent<String>() }
+    protected val _showLoader by lazy { SingleLiveEvent<Boolean>() }
+    protected val _toastMessage by lazy { SingleLiveEvent<String>() }
+
+    val toastMessage : SingleLiveEvent<String>
+        get() = _toastMessage
+
+    val showLoader:SingleLiveEvent<Boolean>
+        get() = _showLoader
 
     override fun onCleared() {
         super.onCleared()
-        showLoader.value = false
-        toastMessage.postValue(null)
+        _showLoader.value = false
+        _toastMessage.postValue(null)
         compositeDisposable.dispose()
     }
 }

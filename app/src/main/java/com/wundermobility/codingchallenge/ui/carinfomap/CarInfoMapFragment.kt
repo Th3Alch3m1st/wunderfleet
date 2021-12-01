@@ -13,9 +13,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.wundermobility.codingchallenge.R
 import com.wundermobility.codingchallenge.core.fragment.BaseFragment
 import com.wundermobility.codingchallenge.databinding.FragmentCarInfoMapBinding
+import com.wundermobility.codingchallenge.network.NetworkResult
 import com.wundermobility.codingchallenge.network.model.CarInfoUIModel
 import com.wundermobility.codingchallenge.ui.MainViewModel
+import com.wundermobility.codingchallenge.utils.gone
 import com.wundermobility.codingchallenge.utils.safeNavigate
+import com.wundermobility.codingchallenge.utils.show
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
@@ -90,8 +93,16 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
     }
 
     private fun initCarListObserver() {
-        viewModel.carList.observe(viewLifecycleOwner) { carList ->
-            setMarkerOnMap(carList)
+        viewModel.carList.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is NetworkResult.Success -> {
+                    setMarkerOnMap(response.data)
+                }
+
+                is NetworkResult.Error -> {
+                    showErrorUI(response)
+                }
+            }
         }
     }
 
@@ -189,6 +200,15 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
         val direction =
             CarInfoMapFragmentDirections.actionFragmentCarListToCarDetailFragment(carInfo)
         findNavController().safeNavigate(direction)
+    }
+
+    private fun showErrorUI(response: NetworkResult.Error) {
+        dataBinding.viewEmpty.root.show()
+        dataBinding.viewEmpty.tvError.text = response.exception.message
+        dataBinding.viewEmpty.btnRetry.setOnClickListener {
+            viewModel.getCarList()
+            dataBinding.viewEmpty.root.gone()
+        }
     }
 
     private fun addOnBackPressListener() {

@@ -27,5 +27,15 @@
         <argument
             android:name="carInfo"
             app:argType="com.wundermobility.codingchallenge.network.model.CarInfoUIModel" />
+
+        <action
+            android:id="@+id/action_car_details_fragment_to_rent_car_success_dialog"
+            app:destination="@id/dialog_selected_car_info" />
     </fragment>
+
+    <dialog
+        android:id="@+id/dialog_selected_car_info"
+        android:name="com.wundermobility.codingchallenge.ui.cardetails.dialog.CarRentSuccessDialog"
+        android:label="CarInfoFilterBottomSheetDialog"
+        tools:layout="@layout/bottom_sheet_dialog_car_rent_success" />
 </navigation>
