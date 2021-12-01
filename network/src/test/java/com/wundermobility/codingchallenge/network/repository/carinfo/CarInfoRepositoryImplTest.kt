@@ -16,6 +16,7 @@ import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.verify
 
 /**
@@ -101,7 +102,7 @@ class CarInfoRepositoryImplTest {
 
         // Verify
         verify(mockApi).getCarDetailsInfo(acInt.capture())
-        acInt.value shouldEqual CAR_ID
+        acInt.firstValue shouldEqual CAR_ID
     }
 
     @Test
@@ -138,7 +139,7 @@ class CarInfoRepositoryImplTest {
 
         // Verify
         verify(mockApi).getCarDetailsInfo(acInt.capture())
-        acInt.value shouldEqual CAR_ID
+        acInt.firstValue shouldEqual CAR_ID
     }
 
 

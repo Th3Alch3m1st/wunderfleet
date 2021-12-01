@@ -4,15 +4,17 @@ import com.wundermobility.codingchallenge.network.RequestException
 import com.wundermobility.codingchallenge.network.datasource.carrent.CarRentApi
 import com.wundermobility.codingchallenge.network.datasource.carrent.CarRentService
 import com.wundermobility.codingchallenge.network.datasource.carrent.CarRentServiceTest
+import com.wundermobility.codingchallenge.network.model.CarRentRequestBody
 import com.wundermobility.codingchallenge.network.repository.carinfo.CarInfoRepositoryImplTest
 import com.wundermobility.codingchallenge.network.testutil.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyInt
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.verify
 
 
@@ -36,11 +38,11 @@ class CarRentRepositoryImplTest {
     fun `request for rent car and car rent success`() {
         // Arrange
         successCarRent()
-        val acInt = argumentCaptor<Int>()
+        val acRequestBody = argumentCaptor<CarRentRequestBody>()
         val acString = argumentCaptor<String>()
 
         // Act
-        sutRepository.rentCar(carId = CarRentServiceTest.CAR_ID).test()
+        sutRepository.rentCar(CarRentRequestBody(CarRentServiceTest.CAR_ID)).test()
             .assertNoErrors()
             .assertComplete()
             .assertValue { response ->
@@ -51,17 +53,17 @@ class CarRentRepositoryImplTest {
             }
 
         // Verify
-        verify(mockApi).rentCar(capture(acString), capture(acString), acInt.capture())
+        verify(mockApi).rentCar(acString.capture(), acString.capture(), acRequestBody.capture())
         acString.allValues[0] shouldEqual CarRentService.CAR_RENT_URL
         acString.allValues[1] shouldEqual "Bearer df7c313b47b7ef87c64c0f5f5cebd6086bbb0fa"
-        acInt.value shouldEqual CarRentServiceTest.CAR_ID
+        acRequestBody.firstValue.carId shouldEqual CarRentServiceTest.CAR_ID
     }
 
     @Test
     fun `get car list info and internet connection exception returned`() {
         failureCarList()
 
-        sutRepository.rentCar(carId = CarRentServiceTest.CAR_ID).test()
+        sutRepository.rentCar(CarRentRequestBody(CarRentServiceTest.CAR_ID)).test()
             .assertError { exception ->
                 assertThat(exception).isInstanceOf(RequestException::class.java)
 
@@ -73,11 +75,11 @@ class CarRentRepositoryImplTest {
 
     private fun failureCarList() {
         val exception = RequestException(message = CarInfoRepositoryImplTest.ERROR_MSG)
-        mockApi.rentCar(any(), any(), anyInt()) returnsException exception
+        mockApi.rentCar(any(), any(), any()) returnsException exception
     }
 
     private fun successCarRent() {
         val testData = TestUtils.getCarRentSuccessTestData("rentCarSuccess.json")
-        mockApi.rentCar(any(), any(), anyInt()) returns testData
+        mockApi.rentCar(any(), any(), any()) returns testData
     }
 }

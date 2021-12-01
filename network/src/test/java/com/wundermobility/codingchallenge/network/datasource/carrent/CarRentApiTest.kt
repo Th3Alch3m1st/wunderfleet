@@ -1,6 +1,7 @@
 package com.wundermobility.codingchallenge.network.datasource.carrent
 
 import com.squareup.moshi.Moshi
+import com.wundermobility.codingchallenge.network.model.CarRentRequestBody
 import com.wundermobility.codingchallenge.network.testutil.TestUtils
 import com.wundermobility.codingchallenge.network.testutil.shouldEqual
 import okhttp3.Dispatcher
@@ -57,7 +58,9 @@ class CarRentApiTest{
         mockWebServer.enqueue(TestUtils.mockResponse("rentCarSuccess.json"))
 
         // Act
-        sutAPI.rentCar(url = "rent/car",token = "df7c313b47b7ef87c64c0f5f5c",carId = 1).test()
+        sutAPI.rentCar(url = "rent/car",token = "df7c313b47b7ef87c64c0f5f5c",
+            CarRentRequestBody(CarRentServiceTest.CAR_ID)
+        ).test()
             .assertNoErrors()
             .assertComplete()
             .assertValue { response ->
