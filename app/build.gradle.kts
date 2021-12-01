@@ -72,6 +72,9 @@ dependencies {
     kapt(Libraries.hiltAnnotationProcessor)
     implementation(Libraries.hiltNavigation)
 
+    //location
+    implementation(Libraries.playServiceLocation)
+
     //For instrumentation tests
     androidTestImplementation(Libraries.hiltInstrumentation)
     kaptAndroidTest(Libraries.hiltInsAnnotationProcessor)
@@ -127,6 +130,8 @@ dependencies {
     implementation (Libraries.stethoJSRhino)
 
     implementation (Libraries.lottie)
+
+    implementation (Libraries.dexter)
 
     implementation(project(":network"))
 }

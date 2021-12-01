@@ -32,6 +32,10 @@ object Versions {
 
     const val lottie = "4.2.1"
 
+    const val playServiceLocation = "18.0.0"
+
+    const val dexter = "6.2.3"
+
     const val jUnit = "4.13.2"
     const val extJunit = "1.1.3"
     const val espressoCore = "3.2.0"
@@ -116,6 +120,12 @@ object Libraries {
 
     //rxjava and rxAndroid
     val rxAndroid by lazy { "io.reactivex.rxjava3:rxandroid:${Versions.rxAndroid}" }
+
+    //location
+    val playServiceLocation by lazy { "com.google.android.gms:play-services-location:${Versions.playServiceLocation}" }
+
+    //permission
+    val dexter by lazy { "com.karumi:dexter:${Versions.dexter}" }
 
     //logging interceptor
     val loggingInterceptor by lazy { "com.github.ihsanbal:LoggingInterceptor:${Versions.loggingInterceptor}" }
