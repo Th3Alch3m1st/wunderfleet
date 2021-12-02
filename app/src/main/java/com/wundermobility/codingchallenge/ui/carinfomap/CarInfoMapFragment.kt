@@ -152,7 +152,11 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
         viewModel.carList.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is NetworkResult.Success -> {
-                    setMarkerOnMap(response.data)
+                    if (response.data.isEmpty()) {
+                        showEmptyUI()
+                    } else {
+                        setMarkerOnMap(response.data)
+                    }
                 }
 
                 is NetworkResult.Error -> {
@@ -263,6 +267,12 @@ class CarInfoMapFragment : BaseFragment<MainViewModel, FragmentCarInfoMapBinding
             viewModel.getCarList()
             dataBinding.viewEmpty.root.gone()
         }
+    }
+
+    private fun showEmptyUI() {
+        dataBinding.viewEmpty.root.show()
+        dataBinding.viewEmpty.tvError.text = getString(R.string.no_car_found)
+        dataBinding.viewEmpty.btnRetry.gone()
     }
 
     private fun addOnBackPressListener() {

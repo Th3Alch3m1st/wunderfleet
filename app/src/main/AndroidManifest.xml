@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:name="com.wundermobility.codingchallenge.core.App"
-        android:theme="@style/Theme.SixtCodingChallenge"
+        android:theme="@style/Theme.WunderFleet"
         android:allowBackup="false">
 
         <meta-data
