@@ -31,11 +31,11 @@ MVVM
 - Use Kotlin DSL for gradle management - it help better gradle management in multi module project. And increase readability, provide code navigation and auto suggestions
 - Write Unit test and UI test to ensure app stability and performance
 - Write some infix function to increase unit test redability
-- Add documentation in UI test to exlain test scenario and write short comment for unit test
+- Add documentation in UI test to explain test scenario and write short comment for unit test
 
 ## Idea for improvement
 - Could have used coroutine over RX, it is lighter than RX and has better testing support. For example - Coroutine support flow. Flow can handle back pressure, it can provide better support when need to test something inOrder for example loader show/hide. Live data doesn't support back pressure hence test fail time to time due to this.
-- I have lastLocation from FusedLocationProviderClient class, could have used requestLocationUpdates for location tracking on user movement
+- I have user lastLocation from FusedLocationProviderClient class to get user location, could have used requestLocationUpdates for location tracking on user movement
 - Could have used a separate viewmodel for car list map and car details fragment. Currently I shared same viewmodel instance in two different fragment, it is better for performance but break single responsibility and interface segregation rule from SOLID rule.
 - Could have cache network call, since it's a static api call. But it wouldn't applicable for real scenario, because car location will be updated frequently.
 
