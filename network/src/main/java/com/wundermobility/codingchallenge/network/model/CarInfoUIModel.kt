@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
  * Created By Rafiqul Hasan
  */
 @Parcelize
-class CarInfoUIModel(
+data class CarInfoUIModel(
     val carID: Int,
     val title: String,
     val latitude: Double,
