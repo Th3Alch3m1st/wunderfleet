@@ -37,14 +37,14 @@ MVVM
 - Could have used coroutine over RX, it is lighter than RX and has better testing support. For example - Coroutine support flow. Flow can handle back pressure, it can provide better support when need to test something inOrder for example loader show/hide. Live data doesn't support back pressure hence test fail time to time due to this.
 - I have lastLocation from FusedLocationProviderClient class, could have used requestLocationUpdates for location tracking on user movement
 - Could have used a separate viewmodel for car list map and car details fragment. Currently I shared same viewmodel instance in two different fragment, it is better for performance but break single responsibility and interface segregation rule from SOLID rule.
+- Could have cache network call, since it's a static api call. But it wouldn't applicable for real scenario, because car location will be updated frequently.
 
 ## Build tools
 - Android Studio Arctic Fox | 2020.3.1 Patch 3
 - Gradle 7.0.2
 
 ## Troubleshoot
-1. Get the error when compiling
-- Gradle plugin requires Java 11 but IDE uses Java 1.8 ![required-java11](https://user-images.githubusercontent.com/35175271/144035750-16757d5e-2fa1-4e9a-8007-9ca0d8ba1239.png)
+1. Get the error when compiling Gradle plugin requires Java 11 but IDE uses Java 1.8 ![required-java11](https://user-images.githubusercontent.com/35175271/144035750-16757d5e-2fa1-4e9a-8007-9ca0d8ba1239.png)
 
 - One of a solution is going to Android Studio Preferences->Built, Execution, Deployment->Build Tools->Gradle-> Gradle Project and select Java 11 and try to compile again
 ![select-java-11](https://user-images.githubusercontent.com/35175271/144036093-103e7a65-52cf-4e56-b39b-5d4fbfcda64a.png)
