@@ -1,4 +1,4 @@
-# Coding Challenge at Wunder Mobility
+# Coding Challenge
 
 ## Screenshots
 <a href="url"><img src="https://user-images.githubusercontent.com/35175271/144422867-eca822a4-07cd-4732-94f7-21b889ec04de.png" height="480" width="230" />
